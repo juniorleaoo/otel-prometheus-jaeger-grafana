@@ -6,12 +6,9 @@ spring:
     name: app
   datasource:
     driverClassName: org.postgresql.Driver
-    url: ${SPRING_DATASOURCE_URL:-}
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/app}
     username: ${SPRING_DATASOURCE_USERNAME:admin}
     password: ${SPRING_DATASOURCE_PASSWORD:123456}
-  threads:
-    virtual:
-      enabled: true
   jpa:
     open-in-view: false
     show-sql: false
