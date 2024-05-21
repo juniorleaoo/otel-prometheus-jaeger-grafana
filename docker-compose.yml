@@ -1,8 +1,8 @@
 services:
-  api:
+  api-11:
     build:
       context: ./
-      dockerfile: app/Dockerfile
+      dockerfile: app/user-11/Dockerfile
     hostname: api
     ports:
       - "8080:8080"
