@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
 import reactor.core.publisher.Mono
 import reactor.core.scheduler.Scheduler
+import java.util.Optional
 
 @Repository
 class UserRepositoryReactive(
@@ -12,11 +13,8 @@ class UserRepositoryReactive(
     val scheduler: Scheduler
 ): UserRepository {
 
-    override fun findById(id: String): Mono<User> {
-        return async {
-            val user = userRepository.findByPublicId(id)
-            user
-        }
+    override fun findById(id: String): Mono<Optional<User>> {
+        return async { userRepository.findByPublicId(id) }
     }
 
     override fun findAll(): Mono<Iterable<User>> {
@@ -30,6 +28,10 @@ class UserRepositoryReactive(
     @Transactional
     override fun deleteById(id: String): Mono<Unit> {
         return async { userRepository.deleteByPublicId(id) }
+    }
+
+    override fun deleteAll(): Mono<Unit> {
+        return async { userRepository.deleteAll() }
     }
 
     override fun save(user: User): Mono<User> {

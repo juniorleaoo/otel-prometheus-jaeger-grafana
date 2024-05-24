@@ -1,6 +1,7 @@
 package io.crud.user.controller
 
 import io.crud.user.entity.User
+import io.crud.user.exception.NotFoundException
 import io.crud.user.service.UserService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -24,8 +25,12 @@ class UserController(
     @GetMapping("/{id}")
     fun get(@PathVariable("id") id: String): Mono<ResponseEntity<UserResponse>> {
         return userService.findById(id)
+            .flatMap { Mono.justOrEmpty(it) }
             .map { ResponseEntity.ok(it.toResponse()) }
             .defaultIfEmpty(ResponseEntity.notFound().build())
+            .onErrorResume(Exception::class.java) {
+                Mono.error(NotFoundException("User not found"))
+            }
     }
 
     @GetMapping
@@ -40,6 +45,12 @@ class UserController(
         return userService.deleteById(id)
             .map { ResponseEntity.noContent().build<Void>() }
             .defaultIfEmpty(ResponseEntity.notFound().build())
+    }
+
+    @DeleteMapping
+    fun deleteAll(): Mono<ResponseEntity<Void>> {
+        return userService.deleteAll()
+            .map { ResponseEntity.noContent().build() }
     }
 
     @PostMapping
@@ -57,7 +68,15 @@ class UserController(
         @Valid @RequestBody userRequest: UserRequest
     ): Mono<ResponseEntity<UserResponse>> {
         return userService.findById(id)
-            .flatMap { userService.save(userRequest.toUser()) }
+            .flatMap { Mono.justOrEmpty(it) }
+            .flatMap {
+                userService.save(it.copy(
+                    name = userRequest.name,
+                    nick = userRequest.nick,
+                    birthDate = userRequest.birthDate,
+                    stack = userRequest.stack
+                ))
+            }
             .map { ResponseEntity.ok(it.toResponse()) }
             .defaultIfEmpty(ResponseEntity.notFound().build())
     }
