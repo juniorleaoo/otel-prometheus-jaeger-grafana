@@ -1,0 +1,24 @@
+server:
+  port: ${SERVER_PORT:8080}
+  servlet:
+    context-path: /v1
+
+spring:
+  application:
+    name: app
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/app}
+    username: ${SPRING_DATASOURCE_USERNAME:admin}
+    password: ${SPRING_DATASOURCE_PASSWORD:123456}
+    hikari:
+      maximum-pool-size: 10
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: true

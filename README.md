@@ -49,3 +49,7 @@ docker compose up
   - Java 11
   - Spring Boot Webflux with coroutines
   - Spring Data JPA
+- user-11-mvc
+  - Java 11
+  - Spring Boot MVC
+  - Spring Data JPA
