@@ -57,3 +57,7 @@ docker compose up
   - Java 21
   - Spring Boot MVC
   - Spring Data JPA
+- user-21-webflux
+  - Java 21
+  - Spring Boot Webflux
+  - Spring Data JPA
