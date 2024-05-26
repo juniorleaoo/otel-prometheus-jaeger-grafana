@@ -53,3 +53,7 @@ docker compose up
   - Java 11
   - Spring Boot MVC
   - Spring Data JPA
+- user-21-mvc
+  - Java 21
+  - Spring Boot MVC
+  - Spring Data JPA
