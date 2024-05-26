@@ -21,10 +21,6 @@ class UserRepositoryReactive(
         return async { userRepository.findAll() }
     }
 
-    override fun existsById(id: String): Mono<Boolean> {
-        return async { userRepository.existsByPublicId(id) }
-    }
-
     @Transactional
     override fun deleteById(id: String): Mono<Unit> {
         return async { userRepository.deleteByPublicId(id) }

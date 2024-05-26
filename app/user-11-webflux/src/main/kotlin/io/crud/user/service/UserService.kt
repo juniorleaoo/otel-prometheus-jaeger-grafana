@@ -17,8 +17,6 @@ class UserService(
 
     fun findAll() = userRepository.findAll()
 
-    fun existsById(id: String) = userRepository.existsById(id)
-
     fun deleteById(id: String): Mono<Unit> {
         return userRepository.findById(id)
             .flatMap {

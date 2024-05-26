@@ -12,20 +12,16 @@ class UserRepositoryReactive(
     val scheduler: Scheduler
 ) : UserRepository {
 
-    override suspend fun findById(id: String): Optional<User> {
-        return coroutineScope { userRepository.findByPublicId(id) }
+    override suspend fun findByPublicId(publicId: String): Optional<User> {
+        return coroutineScope { userRepository.findByPublicId(publicId) }
     }
 
     override suspend fun findAll(): Iterable<User> {
         return coroutineScope { userRepository.findAll() }
     }
 
-    override suspend fun existsById(id: String): Boolean {
-        return coroutineScope { userRepository.existsByPublicId(id) }
-    }
-
-    override suspend fun deleteById(id: String) {
-        coroutineScope { userRepository.deleteByPublicId(id) }
+    override suspend fun deleteById(id: Long) {
+        coroutineScope { userRepository.deleteById(id) }
     }
 
     override suspend fun deleteAll() {

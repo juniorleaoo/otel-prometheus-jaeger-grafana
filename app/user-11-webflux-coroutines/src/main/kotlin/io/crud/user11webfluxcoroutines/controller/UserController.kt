@@ -23,7 +23,6 @@ class UserController(
     @GetMapping("/{id}")
     suspend fun get(@PathVariable("id") id: String): ResponseEntity<UserResponse> {
         val user = userService.findById(id)
-            .orElseThrow { NotFoundException("User with id $id not found") }
         return ResponseEntity.ok(user.toResponse())
     }
 
@@ -57,7 +56,6 @@ class UserController(
     @PutMapping("/{id}")
     suspend fun update(@PathVariable("id") id: String, @Valid @RequestBody userRequest: UserRequest): ResponseEntity<UserResponse> {
         val user = userService.findById(id)
-            .orElseThrow { NotFoundException("User with id $id not found") }
         val updatedUser = userService.save(user.copy(
             name = userRequest.name,
             nick = userRequest.nick,

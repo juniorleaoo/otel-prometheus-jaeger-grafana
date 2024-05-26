@@ -12,8 +12,4 @@ interface UserRepositoryJPA: JpaRepository<User, Long> {
 
     fun findByPublicId(publicId: String): Optional<User>
 
-    fun existsByPublicId(publicId: String): Boolean
-
-    fun deleteByPublicId(publicId: String)
-
 }
