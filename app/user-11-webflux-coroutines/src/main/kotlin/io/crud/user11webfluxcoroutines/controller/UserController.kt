@@ -1,6 +1,5 @@
 package io.crud.user11webfluxcoroutines.controller
 
-import io.crud.user11webfluxcoroutines.exception.NotFoundException
 import io.crud.user11webfluxcoroutines.service.UserService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping

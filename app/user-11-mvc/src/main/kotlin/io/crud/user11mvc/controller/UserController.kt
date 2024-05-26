@@ -1,6 +1,5 @@
 package io.crud.user11mvc.controller
 
-import io.crud.user11mvc.exception.NotFoundException
 import io.crud.user11mvc.service.UserService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
