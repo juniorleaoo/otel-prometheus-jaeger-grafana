@@ -1,6 +1,11 @@
 package io.crud.user11mvc.controller
 
 import io.crud.user11mvc.service.UserService
+import io.micrometer.core.instrument.Counter
+import io.micrometer.core.instrument.Timer
+import io.micrometer.observation.Observation
+import io.micrometer.observation.ObservationRegistry
+import io.micrometer.registry.otlp.OtlpMeterRegistry
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -16,12 +21,40 @@ import javax.validation.Valid
 @RestController
 @RequestMapping("/users")
 class UserController(
-    private val userService: UserService
+    private val userService: UserService,
+    private val observationRegistry: ObservationRegistry,
+    private val otlpMeterRegistry: OtlpMeterRegistry,
 ) {
 
     @GetMapping("/{id}")
     fun get(@PathVariable("id") id: String): ResponseEntity<UserResponse> {
         val user = userService.findById(id)
+
+        Observation.createNotStarted("user_get", observationRegistry)
+            .lowCardinalityKeyValue("name", user.name)
+            .lowCardinalityKeyValue("idPublico", user.publicId)
+            .highCardinalityKeyValue("publicId", user.publicId)
+            .highCardinalityKeyValue("nick", user.nick ?: "not found")
+            .observe {
+                println("User get observation started")
+            }
+
+        Counter.builder("users")
+            .tag("id", user.publicId)
+            .tag("name", user.name)
+            .tag("nick", user.nick ?: "not found")
+            .description("a number of requests to /api/books endpoint")
+            .register(otlpMeterRegistry)
+            .increment()
+
+        Timer.builder("users_time")
+            .tag("id", user.publicId)
+            .tag("name", user.name)
+            .tag("nick", user.nick ?: "not found")
+            .description("a timer of requests to /api/books endpoint")
+            .register(otlpMeterRegistry)
+            .record(1000, java.util.concurrent.TimeUnit.MILLISECONDS)
+
         return ResponseEntity.ok(user.toResponse())
     }
 

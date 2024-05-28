@@ -22,3 +22,22 @@ spring:
     properties:
       hibernate:
         show_sql: true
+
+#management:
+#  otlp:
+#    metrics:
+#      export:
+#        url: http://localhost:8889
+#  endpoint:
+#    prometheus:
+#      enabled: true
+#  endpoints:
+#    web:
+#      exposure:
+#        include: health,info,metrics,prometheus
+#  metrics:
+#    tags:
+#      application: ${spring.application.name}
+#
+otlp:
+  url: http://localhost:4318/v1/metrics
