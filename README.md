@@ -39,25 +39,4 @@ docker compose up
 - 4318: HTTP receiver
 - 55678: zpages extension
 
-## APP's
-
-- user-11
-  - Java 11
-  - Spring Boot Webflux without coroutines
-  - Spring Data JPA
-- user-11-webflux-coroutines
-  - Java 11
-  - Spring Boot Webflux with coroutines
-  - Spring Data JPA
-- user-11-mvc
-  - Java 11
-  - Spring Boot MVC
-  - Spring Data JPA
-- user-21-mvc
-  - Java 21
-  - Spring Boot MVC
-  - Spring Data JPA
-- user-21-webflux
-  - Java 21
-  - Spring Boot Webflux
-  - Spring Data JPA
+## APP
