@@ -21,22 +21,24 @@ repositories {
 
 dependencyManagement {
 	imports {
-		mavenBom("io.micrometer:micrometer-bom:1.13.0")
+		mavenBom("io.opentelemetry:opentelemetry-bom:1.40.0")
 	}
 }
 
 dependencies {
-	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
 
-	implementation("io.micrometer:micrometer-registry-prometheus")
-	implementation("io.micrometer:micrometer-registry-otlp")
-
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0-RC")
+
+	implementation("io.opentelemetry:opentelemetry-api")
+	implementation("io.opentelemetry:opentelemetry-sdk")
+	implementation("io.opentelemetry:opentelemetry-exporter-logging")
+	implementation("io.opentelemetry.semconv:opentelemetry-semconv:1.26.0-alpha")
+	implementation("io.opentelemetry:opentelemetry-sdk-extension-autoconfigure")
 }
 
 tasks.withType<KotlinCompile> {
